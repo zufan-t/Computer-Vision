@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+data/cache/
+data/video/
+.venv/
+
+error_v2.log
+explore_mp.py
+inspect_mp.py
+mp_inspection.txt
+requirements_installed.txt
+test_mp.py
+test_mp_fix.py
