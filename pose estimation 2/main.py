@@ -59,9 +59,7 @@ def main():
         if not success_s:
             break
 
-        if frame_count > 1000:
-            print("Reached 1000 frames limit for quick analysis.")
-            break
+
 
         img_guru = cv2.resize(img_guru, (target_w, target_h))
         img_siswa = cv2.resize(img_siswa, (target_w, target_h))
