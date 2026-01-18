@@ -1,0 +1,12 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Data video (biasanya besar, jangan diupload ke git)
+data/*.mp4
+output/*.mp4
+output/*.avi
+
+# IDE settings
+.vscode/
+.idea/
