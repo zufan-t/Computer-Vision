@@ -21,9 +21,8 @@ class PoseEngine:
         )
         self.mp_drawing = mp.solutions.drawing_utils
         
-        # --- [ALGORITMA] VARIABLE UNTUK EXPONENTIAL MOVING AVERAGE (EMA) ---
         self.prev_landmarks = None
-        self.alpha = 0.6  # Faktor Halus (0.0 - 1.0). 0.6 = Stabil.
+        self.alpha = 0.6
 
     def find_pose(self, img, draw=True):
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -31,23 +30,18 @@ class PoseEngine:
         
         lm_list = []
         if self.results.pose_landmarks:
-            # --- [ALGORITMA] PROSES PENGHALUSAN (SMOOTHING) ---
-            # Kita manipulasi data sebelum digambar
             if self.prev_landmarks is None:
                 self.prev_landmarks = self.results.pose_landmarks
             else:
                 for i, landmark in enumerate(self.results.pose_landmarks.landmark):
                     prev = self.prev_landmarks.landmark[i]
                     
-                    # RUMUS EMA: New = (Current * alpha) + (Previous * (1-alpha))
                     landmark.x = (landmark.x * self.alpha) + (prev.x * (1 - self.alpha))
                     landmark.y = (landmark.y * self.alpha) + (prev.y * (1 - self.alpha))
                     landmark.z = (landmark.z * self.alpha) + (prev.z * (1 - self.alpha))
                 
-                # Simpan untuk frame depan
                 self.prev_landmarks = self.results.pose_landmarks
 
-            # Ekstrak data ke list biar mudah dihitung
             for id, lm in enumerate(self.results.pose_landmarks.landmark):
                 h, w, c = img.shape
                 cx, cy = int(lm.x * w), int(lm.y * h)
